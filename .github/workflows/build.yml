@@ -77,7 +77,7 @@ jobs:
           fi
 
           echo "add kernel"
-          tar caf ${{ github.workspace }}/source/kernel.tgz -C ${{ github.workspace }}/bzImage .
+          tar caf ${{ github.workspace }}/source/kernel.tgz -C ${{ github.workspace }}/bzImage
 
       - name: Upload to Artifacts
         uses: actions/upload-artifact@v3
