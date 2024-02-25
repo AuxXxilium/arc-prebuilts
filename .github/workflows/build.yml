@@ -77,7 +77,16 @@ jobs:
           fi
 
           echo "add kernel"
-          tar caf ${{ github.workspace }}/source/kernel.tgz -C ${{ github.workspace }}/bzImage
+          if [ ! -d "${{ github.workspace }}/source/kernel" ]; then
+            mkdir -p "${{ github.workspace }}/source/kernel"
+            chmod a+rw -R "${{ github.workspace }}/source/kernel"
+          fi
+
+          KERNEL_PATH="${{ github.workspace }}/kernel"
+
+          cp -Rvf "${KERNEL_PATH}/." "${{ github.workspace }}/source/kernel"
+
+          tar caf ${{ github.workspace }}/source/kernel.tgz -C ${{ github.workspace }}/source/kernel .
 
       - name: Upload to Artifacts
         uses: actions/upload-artifact@v3
