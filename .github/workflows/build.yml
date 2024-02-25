@@ -118,7 +118,7 @@ jobs:
 
           if [ "${{ inputs.firmware }}" == "true" ]; then
             echo "extract all modules"
-            for F in ./modules/*.tgz; do mkdir "${F%.tgz}" && tar -xzf "${F}" -C "${F%.tgz}"; done
+            for F in ./prebuilts/*.tgz; do mkdir "${F%.tgz}" && tar -xzf "${F}" -C "${F%.tgz}"; done
 
             echo "get firmware"
             SOURCE=/tmp/linux-firmware
@@ -130,7 +130,7 @@ jobs:
               else
                 [ -e "firmware/${L}" ] && echo "Used modules ${L}" || echo "Missing ${L}"
               fi
-            done < <(find ./modules -name \*.ko -exec sh -c '/sbin/modinfo {} | grep ^firmware' \; | awk '{print $2}')
+            done < <(find ./prebuilts -name \*.ko -exec sh -c '/sbin/modinfo {} | grep ^firmware' \; | awk '{print $2}')
           fi
 
           tar caf firmware.tgz -C firmware .
